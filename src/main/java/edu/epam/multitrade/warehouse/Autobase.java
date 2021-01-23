@@ -30,8 +30,8 @@ public class Autobase {
     private final TruckDeliveryComparator deliveryComparator=new TruckDeliveryComparator();
 
     public Autobase() {
-        trucksOnAutoBase = new PriorityQueue<>(deliveryComparator);
-        trucksOnTerminals = new PriorityQueue<>(deliveryComparator);
+        trucksOnAutoBase = new PriorityQueue<>(maxTrucksOnBase,deliveryComparator);
+        trucksOnTerminals = new PriorityQueue<>(maxTerminals,deliveryComparator);
     }
 
 
