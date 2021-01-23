@@ -26,7 +26,6 @@ public class Autobase {
     private static final ReentrantLock lock = new ReentrantLock(true);
     private final Condition condition = lock.newCondition();
     private static final int maxTrucksOnBase = 6;
-    private static final int minTrucksOnBase = 0;
     private static final int maxTerminals = 3;
     private final TruckDeliveryComparator deliveryComparator=new TruckDeliveryComparator();
 
@@ -121,56 +120,5 @@ public class Autobase {
             logger.error("InterruptedException: {}", e.getMessage());
         }
     }
-  /*
-    private void discharging(Vehicle vehicle) {
-        lock.lock();
-        try {
-            carsList.remove(vehicle);
-            logger.info("{} : discharged!", Thread.currentThread().getName());
-            TimeUnit.MILLISECONDS.sleep(1000);
-            if (carsList.isEmpty()) {
-                currentState = FerryState.EMPTY;
-                condition.signalAll();
-            }
-        } catch (InterruptedException e) {
-            logger.error("InterruptedException: {}", e.getMessage());
-        } finally {
-            lock.unlock();
-        }
-    }*/
-/*
-    private void sailing(Vehicle vehicle){
-        logger.info("{} : cross the river!", Thread.currentThread().getName());
-        try {
-            TimeUnit.MILLISECONDS.sleep(5000);
-        } catch (InterruptedException e) {
-            logger.error("InterruptedException: {}", e.getMessage());
-        }
-    }*/
- /*   public Truck getTruck(int id) {
-        return new Truck(1, 100, TruckDeliveryType.USUALDELIVERY, TruckWorkType.LOADING);
-    }*/
 
- /*private void addCar(Vehicle vehicle) {
-     try {
-         lock.lock();
-         while (currentState == FerryState.CHARGED) {
-             logger.info("{}: all seats are occupied, waiting", Thread.currentThread().getName());
-             condition.await();
-         }
-         if (!checkFreePlaceForVehicle(vehicle)) {
-             logger.info("Ready to go!");
-             currentState = FerryState.CHARGED;
-             condition.signalAll();
-             condition.await();
-         }
-         carsList.add(vehicle);
-         logger.info("{}: boarded the ferry waiting for start.", Thread.currentThread().getName());
-         condition.await(5000, TimeUnit.MILLISECONDS);
-     } catch (InterruptedException e) {
-         logger.error("InterruptedException: {}", e.getMessage());
-     } finally {
-         lock.unlock();
-     }
- }*/
 }
