@@ -2,8 +2,11 @@ package edu.epam.multitrade.state.impl;
 
 import edu.epam.multitrade.entity.Truck;
 import edu.epam.multitrade.state.State;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class LoadingState extends State {
+    private static final Logger logger = LogManager.getLogger(LoadingState.class);
     /**
      * Контекст передаёт себя в конструктор состояния, чтобы состояние могло
      * обращаться к его данным и методам в будущем, если потребуется.
@@ -15,28 +18,27 @@ public class LoadingState extends State {
     }
 
     @Override
-    public String loading() {
-        String state=truck.toString();
-        return state;
+    public void loading() {
+        logger.info("state is "+truck.toString());
     }
 
     @Override
-    public String onBase() {
+    public void onBase() {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public String outBase() {
+    public void outBase() {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public String served() {
+    public void served() {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public String unloading() {
+    public void unloading() {
         throw new UnsupportedOperationException();
     }
 }

@@ -14,9 +14,9 @@ public abstract class State {
     }
 
 
-    public abstract String loading();
-    public abstract String onBase();
-    public abstract String outBase();
-    public abstract String served();
-    public abstract String unloading();
+    public abstract void loading();
+    public abstract void onBase();
+    public abstract void outBase();
+    public abstract void served();
+    public abstract void unloading();
 }

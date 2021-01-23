@@ -3,6 +3,11 @@ package edu.epam.multitrade.warehouse;
 import edu.epam.multitrade.comparator.TruckDeliveryComparator;
 import edu.epam.multitrade.entity.Truck;
 
+import edu.epam.multitrade.entity.TruckWorkType;
+import edu.epam.multitrade.state.impl.LoadingState;
+import edu.epam.multitrade.state.impl.OnBaseState;
+import edu.epam.multitrade.state.impl.ServedState;
+import edu.epam.multitrade.state.impl.UnloadingState;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -26,8 +31,8 @@ public class Autobase {
     private final TruckDeliveryComparator deliveryComparator=new TruckDeliveryComparator();
 
     public Autobase() {
-        trucksOnAutoBase = new PriorityQueue<>(maxTrucksOnBase,deliveryComparator);
-        trucksOnTerminals = new PriorityQueue<>(maxTerminals,deliveryComparator);
+        trucksOnAutoBase = new PriorityQueue<>(deliveryComparator);
+        trucksOnTerminals = new PriorityQueue<>(deliveryComparator);
     }
 
 
@@ -55,6 +60,8 @@ public class Autobase {
             }
             if (trucksOnAutoBase.size() < maxTrucksOnBase) {
                 logger.info("Ready to go on AutoBase!");
+                truck.changeState(new OnBaseState(truck));
+                truck.getState().onBase();
                 trucksOnAutoBase.add(truck);
             }
         } catch (InterruptedException e) {
@@ -73,6 +80,13 @@ public class Autobase {
             }
             if (trucksOnTerminals.size() < maxTerminals) {
                 logger.info("Ready to go on Terminal!");
+                if (truck.getWorkType().equals(TruckWorkType.LOADING)){
+                    truck.changeState(new LoadingState(truck));
+                    truck.getState().loading();
+                }else{
+                    truck.changeState(new UnloadingState(truck));
+                    truck.getState().unloading();
+                }
                 trucksOnTerminals.add(truck);
             }
         } catch (InterruptedException e) {
@@ -87,6 +101,8 @@ public class Autobase {
         try {
             trucksOnTerminals.remove(truck);
             logger.info("{} : removed from terminal!", Thread.currentThread().getName());
+            truck.changeState(new ServedState(truck));
+            truck.getState().served();
             trucksOnAutoBase.remove(truck);
             logger.info("{} : removed from AutoBase!", Thread.currentThread().getName());
             if (trucksOnTerminals.isEmpty()) {

@@ -13,28 +13,27 @@ public class OutBaseState extends State {
     }
 
     @Override
-    public String loading() {
+    public void loading() {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public String onBase() {
+    public void onBase() {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public String outBase() {
+    public void outBase() {
        logger.info("state is "+truck.toString());
-        return "state";
     }
 
     @Override
-    public String served() {
+    public void served() {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public String unloading() {
+    public void unloading() {
         throw new UnsupportedOperationException();
     }
 }

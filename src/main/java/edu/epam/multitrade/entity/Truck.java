@@ -82,6 +82,7 @@ public class Truck implements Runnable{
 
     @Override
     public void run() {
+        this.getState().outBase();
         autobase.addTruckToBase(this);
         autobase.addTruckToTerminal(this);
         autobase.terminalWork(this);
